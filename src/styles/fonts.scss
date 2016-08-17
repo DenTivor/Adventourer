@@ -1,0 +1,6 @@
+@import "src/styles/mixins";
+
+@include font-face('Alexbrush-regular', 'alexbrush-regular', 'alexbrush', 'serif');
+@include font-face('Sourcesanspro-regular', 'sourcesanspro-regular', 'sourcesanspro', 'serif');
+@include font-face('Sourcesanspro-semibold', 'sourcesanspro-semibold', 'sourcesanspro', 'serif');
+@include font-face('Sourcesanspro-extralight', 'sourcesanspro-extralight', 'sourcesanspro', 'serif');

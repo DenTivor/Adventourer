@@ -1,0 +1,44 @@
+mixin service(firstheader,secondheader, ...items)
+	.col-md-4.service-wrapper
+		.service
+			.header 
+				div.first= firstheader
+				div.second= secondheader
+			ul.items-wrapper
+				each item in items
+					li.item= item
+			.service-footer.clearfix
+				.main-btn-blue-replic.pull-right Подробнее
+
+mixin menu(...items)
+	#menu.menu
+		nav.navbar.navbar-default.navbar-static-top
+			.container-fluid
+				.navbar-header
+					button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#main-menu', aria-expanded='false')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='#')
+						.logotype
+				#main-menu.navigation.collapse.navbar-collapse
+					ul.nav.navbar-nav.navbar-right
+						each item in items
+							li: a.item(href="#"): span.item-inner= item
+						li.dropdown
+							a.dropdown-toggle.item(href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+								span.item-inner Dropdown 
+								span.caret
+							ul.dropdown-menu
+								li: a(href="#") Action
+								li: a(href="#") Action 1
+								li: a(href="#") Action 2
+								li: a(href="#") Action 3
+
+mixin mobileservice(header, text)
+	.col-sm-12.service
+		h2.mobile-header= header
+		.mobile-items= text
+		.service-footer.clearfix
+			.main-btn-blue-replic.pull-right Подробнее
