@@ -1,20 +1,26 @@
 var gulp   = require('gulp');
-var jade = require('gulp-jade');
 var browserSync = require('browser-sync');
 var clean = require('gulp-clean');
-var sass = require('gulp-sass');
 var sequence = require('gulp-sequence');
+var pug = require('gulp-pug');
+var styl = require('gulp-stylus');
 
 
 var paths = {
   js :   {src : ['src/scripts/*.js'],      dest : 'build/scripts' },
-  jade : {src : ['src/jade/**/*.jade'],      dest : 'build' },
-  sass : {src : ['src/styles/**/*.scss'],      dest : 'build/styles', target: 'src/styles/main.scss' },
+  pug : {src : ['src/pug/**/*.pug'],      dest : 'build' },
+  styl : {src : ['src/styles/**/*.styl'],      dest : 'build/styles', target: 'src/styles/main.styl' },
   prodfiles : ["build/*.html", "build/scripts/*.js", "build/styles/*.css"],
   images: {src: ['src/images/*.*'],        dest : 'build/images'},
   video: {src: ['src/video/zagreby-intro.mp4'], dest : 'build/video'},
   fonts: {src: ['src/fonts/*.*'], dest : 'build/fonts'}
 };
+
+
+function handleError(err) {
+    console.log('[\033[31mCritical\033[0m] Line '+err.lineNumber+' in '+err.message);
+    this.emit('end');
+}
 
 
 gulp.task('clean', function () {
@@ -26,8 +32,8 @@ gulp.task('clean', function () {
 gulp.task('build', 
     sequence(
       'clean',
-      'compile:jade',
-      'compile:sass',
+      'compile:pug',
+      'compile:styl',
       'copy:js',
       'copy:images',
       'copy:fonts'
@@ -54,27 +60,34 @@ gulp.task('serve',['build'], function(){
 });
 
 
-gulp.task('compile:jade', function() {
+gulp.task('compile:pug', function() {
  
-  gulp.src('./src/jade/*.jade')
-    .pipe(jade({
+  return gulp.src('./src/pug/*.pug')
+    .pipe(pug({
       pretty: true
-    }))
+    }).on('error', handleError))
     .pipe(gulp.dest('./build/'))
 });
 
 
-gulp.task('compile:sass', function () {
-  return gulp.src(paths.sass.target)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(paths.sass.dest));
+gulp.task('compile:styl', function () {
+  return gulp.src(paths.styl.target)
+    .pipe(styl({
+      paths:  ['/', 'bower_components', 'src/styles'] 
+    }).on('error', handleError))
+    .pipe(gulp.dest(paths.styl.dest));
 });
 
 
 gulp.task('watch_source', function () {
-  gulp.watch(paths.jade.src, ['compile:jade']);
-  gulp.watch(paths.sass.src, ['compile:sass']);
+  gulp.watch(paths.pug.src, ['compile:complexpug']);
+  gulp.watch(paths.styl.src, ['compile:styl']);
   gulp.watch(paths.js.src, ['copy:js']);
+});
+
+
+gulp.task('compile:complexpug',['compile:pug'], function() {
+  browserSync.reload();
 });
 
 

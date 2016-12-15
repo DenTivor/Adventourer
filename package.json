@@ -1,7 +1,7 @@
 {
   "name": "Adventourer",
-  "version": "0.0.1",
-  "description": "Simple Gulp engine with installed bootstrap, sass and jade. JS part uses Require.js. Ready for a plugin or simple site development",
+  "version": "0.0.2",
+  "description": "Simple Gulp engine with installed bootstrap, Stylus and Pug. JS part uses Require.js. Ready for a plugin or simple site development",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,8 +18,9 @@
     "browser-sync": "^2.11.1",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
-    "gulp-jade": "^1.1.0",
-    "gulp-sass": "^2.3.2",
-    "gulp-sequence": "^0.4.5"
+    "gulp-pug": "^3.1.0",
+    "gulp-sequence": "^0.4.5",
+    "gulp-stylus": "^2.6.0",
+    "pug": "^2.0.0-beta6"
   }
 }
