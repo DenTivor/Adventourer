@@ -11,7 +11,7 @@ var paths = {
   pug : {src : ['src/pug/**/*.pug'],      dest : 'build' },
   styl : {src : ['src/styles/**/*.styl'],      dest : 'build/styles', target: 'src/styles/main.styl' },
   prodfiles : ["build/*.html", "build/scripts/*.js", "build/styles/*.css"],
-  images: {src: ['src/images/*.*'],        dest : 'build/images'},
+  images: {src: ['src/images/*'],        dest : 'build/images'},
   video: {src: ['src/video/zagreby-intro.mp4'], dest : 'build/video'},
   fonts: {src: ['src/fonts/*.*'], dest : 'build/fonts'}
 };
