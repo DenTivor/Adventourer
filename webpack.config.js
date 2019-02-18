@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const each = require('lodash/each');
 const map = require('lodash/map');
 const glob = require('glob');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const pugPages = ['index', 'other']
 
@@ -35,9 +36,13 @@ const pug = {
 };
 
 const config = {
-  entry: {
-    app: './src/scripts/app.tsx'
-  },
+  // entry: {
+  //   app: './src/scripts/app.tsx'
+  // },
+  entry: [
+    './src/scripts/app.tsx',
+    './src/styles/styles.styl'
+  ],
   output: {
     path: path.resolve(__dirname, 'devBuild'),
     publicPath: '/devBuild/',
@@ -65,14 +70,34 @@ const config = {
   module: {
     rules: [
       {
-        'test': /\.tsx?$/,
-        'include': path.resolve(__dirname, 'src/scripts'),
-        'loaders': ['babel-loader','ts-loader'],
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {name: 'img/[name].[ext]'}  
+          }
+        ]
+      },
+      {
+        test: /\.tsx?$/,
+        include: path.resolve(__dirname, 'src/scripts'),
+        loaders: ['babel-loader','ts-loader'],
+      },
+      {
+        test: /\.styl$/,
+        include: path.resolve(__dirname, 'src/styles'),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'stylus-loader']
+        })
       },
       pug
     ]
   },
-  plugins: [...getPugPages()]
+  plugins: [
+    ...getPugPages(),
+    new ExtractTextPlugin('styles/style.bundle.css')
+  ]
  
 };
 module.exports = config;
