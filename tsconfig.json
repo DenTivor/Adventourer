@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "sourceMap": true,
+      "target": "es5",
+      "module": "es6",
+      "moduleResolution": "node",
+      "experimentalDecorators": true,
+      "declaration": false,
+      "removeComments": true,
+      "noImplicitReturns": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "noUnusedLocals": true,
+      "strict": true,
+      "outDir": "devBuild",
+      "lib": ["es6", "es7", "dom"],
+      "baseUrl": "src",
+      "paths": {
+        "app/*": ["./scripts/app/*"]
+      }
+    },
+    "exclude": ["devBuild", "node_modules"]
+  }
+  
