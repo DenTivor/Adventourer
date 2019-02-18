@@ -5,6 +5,7 @@ const each = require('lodash/each');
 const map = require('lodash/map');
 const glob = require('glob');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 const pugPages = ['index', 'other']
 
@@ -36,26 +37,14 @@ const pug = {
 };
 
 const config = {
-  // entry: {
-  //   app: './src/scripts/app.tsx'
-  // },
-  entry: [
-    './src/scripts/app.tsx',
-    './src/styles/styles.styl'
-  ],
+  entry: {
+    app: './src/scripts/app.tsx',
+    styles: './src/styles/styles.styl'
+  },
   output: {
     path: path.resolve(__dirname, 'devBuild'),
     publicPath: '/devBuild/',
-    filename: 'main.bundle.js'
-  },
-  resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
-    // Fix webpack's default behavior to not load packages with jsnext:main module
-    // (jsnext:main directs not usually distributable es6 format, but es6 sources)
-    mainFields: ['module', 'browser', 'main'],
-    alias: {
-      app: path.resolve(__dirname, 'src/scripts/')
-    }
+    filename: '[name].bundle.js'
   },
   devServer: {
     contentBase: PATHS.src,
@@ -96,7 +85,10 @@ const config = {
   },
   plugins: [
     ...getPugPages(),
-    new ExtractTextPlugin('styles/style.bundle.css')
+    new FixStyleOnlyEntriesPlugin({
+      extensions: ["less", "scss", "css", "styl"]
+    }),
+    new ExtractTextPlugin('styles/style.bundle.css'),
   ]
  
 };
